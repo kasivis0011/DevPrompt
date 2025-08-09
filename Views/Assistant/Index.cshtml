@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Dev Prompt";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" asp-controller="Assistant" asp-action="Ask">
+    <div class="form-group">
+        <label for="prompt">Ask a coding question:</label>
+        <textarea id="prompt" name="prompt" rows="5" class="form-control" onkeydown="submitOnEnter(event)">@ViewBag.Prompt</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Ask</button>
+</form>
+
+@if (ViewBag.Response != null)
+{
+    <hr />
+    <h4>AI Response:</h4>
+    <div>
+        @Html.Raw(ConvertMarkdownToHtml(ViewBag.Response))
+    </div>
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre").forEach((block) => {
+                // Create copy button
+                const button = document.createElement("button");
+                button.innerText = "Copy";
+                button.className = "copy-btn";
+                block.style.position = "relative";
+                button.style.position = "absolute";
+                button.style.top = "8px";
+                button.style.right = "8px";
+                button.style.padding = "4px 8px";
+                button.style.fontSize = "12px";
+                button.style.cursor = "pointer";
+
+                // Append button to pre block
+                block.appendChild(button);
+
+                button.addEventListener("click", () => {
+                    navigator.clipboard.writeText(block.innerText).then(() => {
+                        button.innerText = "Copied!";
+                        setTimeout(() => button.innerText = "Copy", 2000);
+                    });
+                });
+            });
+        });
+        function submitOnEnter(event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                event.target.form.submit();
+            }
+        }
+    </script>
+    <style>
+        .copy-btn {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+            .copy-btn:hover {
+                opacity: 1;
+            }
+    </style>
+}
+
+@functions {
+    public string ConvertMarkdownToHtml(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return "";
+
+        var pattern = @"```(\w+)?\n([\s\S]*?)```";
+        var replaced = System.Text.RegularExpressions.Regex.Replace(input, pattern, match =>
+        {
+            var lang = match.Groups[1].Value;
+            var code = System.Net.WebUtility.HtmlEncode(match.Groups[2].Value);
+            var langClass = string.IsNullOrEmpty(lang) ? "" : $"language-{lang}";
+            return $"<pre><code class=\"{langClass}\">{code}</code></pre>";
+        });
+
+        // DO NOT convert \n to <br> globally — remove this line
+        // return replaced.Replace("\n", "<br>");
+
+        return replaced;
+    }
+
+}

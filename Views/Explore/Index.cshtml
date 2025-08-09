@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Explore My Projects";
+    Layout = "_Layout";
+}
+
+<div class="explore-container">
+    <h2>Explore My Projects</h2>
+    <div class="bubble-grid">
+        <a href="https://github.com/yourusername/project1" target="_blank" class="project-bubble">
+            Data Flake
+        </a>
+        <a href="https://yourproject2link.com" target="_blank" class="project-bubble">
+            AuthJs SDK
+        </a>
+        <a href="https://yourproject3link.com" target="_blank" class="project-bubble">
+            Project 3
+        </a>
+        <a href="https://yourproject4link.com" target="_blank" class="project-bubble">
+            Project 4
+        </a>
+        <!-- Add more project bubbles here -->
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #121212;
+        color: #fff;
+    }
+
+    .explore-container {
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .explore-container h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+    }
+
+    .bubble-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+    }
+
+    .project-bubble {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-bubble:hover {
+        transform: scale(1.08);
+        box-shadow: 0 8px 25px rgba(0, 255, 255, 0.4);
+        background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+    }
+
+    @@media (max-width: 600px) {
+        .project-bubble {
+            width: 140px;
+            height: 140px;
+            font-size: 1rem;
+        }
+    }
+</style>
