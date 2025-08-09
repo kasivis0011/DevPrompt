@@ -17,8 +17,8 @@ This tool helps developers interactively ask coding-related questions and get fo
 ---
 
 ## 📸 Screenshots
-![AI Assistant Screenshot](screenshots/DevPrompt_Screenshot_1.png)
-![AI Assistant Screenshot](screenshots/DevPrompt_Screenshot_2.png)
+![AI Assistant Screenshot](Screenshots/DevPrompt_Screenshot_1.png)
+![AI Assistant Screenshot](Screenshots/DevPrompt_Screenshot_2.png)
 
 ---
 
